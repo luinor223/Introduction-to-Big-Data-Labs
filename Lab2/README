@@ -1,0 +1,34 @@
+## How to Run Each Script
+
+### Task 2.1 (MapReduce - Total Revenue Calculation)
+To execute Task 2.1, run the following command:
+```bash
+python 22127452.py <input file path> --output-dir <your desired output folder>
+```
+#### Example:
+```bash
+python 22127452.py "Amazon Sale Report.csv" --output-dir output
+```
+
+#### Handling Output Files
+Since `mrjob` generates multiple output parts (e.g., `part-00000`, `part-00001`, ...), these need to be merged into a single `output.csv` file.
+
+- **Issue:** The built-in `mrjob` function `cat_output()` for concatenating output files does not preserve the correct ordering (e.g., `part-00013` might be read before `part-00000`).
+- **Solution:** The script manually reads and sorts part filename using `os.listdir()`, then merges them into a final `output.csv`.
+
+---
+
+### **Task 2.2 and 2.3**
+To execute Task 2.2 and 2.3, please change the `filename` in the script to your desired input file and run the following command:
+```bash
+python 22127452.py
+```
+#### **Handling Output Files**
+Since PySpark writes results in a distributed manner, multiple part files (`part-*.csv`) are generated instead of a single `output.csv`.
+
+To merge these files into a single CSV, run:
+```bash
+cp /path/to/output_folder/part-*.csv output.csv
+```
+
+---
